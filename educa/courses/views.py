@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 
 from django.shortcuts import redirect,get_object_or_404
 from django.views.generic.base import TemplateResponseMixin, View
-
+from braces.views import CsrfExemptMixin, JSONRequestResponseMixin
 
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         PermissionRequiredMixin)
@@ -142,7 +142,18 @@ class ModuleContentListView(TemplateResponseMixin,View):
 
     def get(self,request,module_id):
         module = get_object_or_404(Module,id=module_id,course__owner=request.user)
-        print(f"***********************{module}")
-        print(f"***********************{module.course}")
         return self.render_to_response({'module':module})
     
+#this ModuleOrderView allows us to update the order of course modules
+class ModuleOrderView(CsrfExemptMixin,JSONRequestResponseMixin,View):
+    def post(self,request):
+        for id,order in self.request_json.items():
+            Module.objects.filter(id=id,course__owner=request.user).update(order=order)
+
+        return self.render_json_response({'saved':'OK'})
+    
+class ContentOrderView(CsrfExemptMixin,JSONRequestResponseMixin,View):
+    def post(self,request):
+        for id,order in self.request_json.items():
+            Content.objects.filter(id=id,module__course__owner=request.user).update(order=order)
+        return self.render_json_response({'saved':'OK'})
