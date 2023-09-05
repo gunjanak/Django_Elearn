@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
     path("mine/",views.ManageCourseListView.as_view(),
          name='manage_course_list'),
@@ -23,4 +24,7 @@ urlpatterns = [
      path('module/<int:module_id>/',views.ModuleContentListView.as_view(),name='module_content_list'),
      path('module/order/',views.ModuleOrderView.as_view(),name='module_order'),
      path('content/order/',views.ContentOrderView.as_view(),name='content_order'),
+
+     path('subject/<slug:subject>/',views.CourseListView.as_view(),name='course_list_subject'),
+     path('<slug:slug>/',views.CourseDetailView.as_view(),name='course_detail'),
 ]
