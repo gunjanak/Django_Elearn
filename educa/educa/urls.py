@@ -19,6 +19,7 @@ from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+import redisboard
 from courses.views import CourseListView
 
 urlpatterns = [
@@ -28,6 +29,11 @@ urlpatterns = [
     path('course/',include('courses.urls')),
     path("",CourseListView.as_view(),name='course_list'),
     path("students/",include('students.urls')),
+    #path('redis/',include('redis_admin.urls')),
+    path('__debug__/',include('debug_toolbar.urls')),
+   
+
+
 ]
 
 if settings.DEBUG:
