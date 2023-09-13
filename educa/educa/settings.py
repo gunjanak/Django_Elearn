@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'embed_video',
     'rest_framework',
+    
+   
 ]
 
 MIDDLEWARE = [
@@ -176,3 +178,4 @@ REST_FRAMEWORK = {
       'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
