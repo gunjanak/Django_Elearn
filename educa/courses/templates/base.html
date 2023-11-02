@@ -1,4 +1,5 @@
 {% load static %}
+{% load course %}
 <!DOCTYPE html>
 <html>
     ><head>
@@ -12,6 +13,7 @@
     <body>
         <div id="header">
             <a href="/" class="logo">Educa</a>
+            
             <ul class="menu">
                 {% if request.user.is_authenticated %}
                     <li><a href="{% url 'logout'%}">
@@ -24,8 +26,43 @@
                         </a>
                     </li>
                 {% endif %}
+                
             </ul>
+            {% if request.user.is_authenticated %}
+            {% if request.user|has_group:"Instructors" %}
+            <ul class="menu2">
+                
+                <li>
+                    <a href="{% url 'manage_course_list'%}">
+                        Your Courses
+                    </a>
+                </li>
+                
+            </ul>
+            {% else %}
+            <ul class="menu2">
+                <li>
+                    <a href="{% url 'student_course_list'%}">
+                        Your Courses
+                    </a>
+                </li>
+
+            </ul>
+            {% endif %}
+            {% else %}
+            <ul class="menu2">
+                <li>
+                    <a href="{% url 'student_registration' %}">
+                        Registration
+                    </a>
+                </li>
+            </ul>
+            {% endif %}
+            
         </div>
+
+       
+
         <div id="content">
             {%block content%}
             {%endblock%}

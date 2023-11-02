@@ -22,14 +22,20 @@
         {{object.modules.count}} modules
         <br>
         Instructor: {{object.owner}}
+        <br>
+
+        Students Enrolled: {{object.students.count}}
+        
     </p>
     {{object.overview|linebreaks}}
     {% if request.user.is_authenticated %}
+        {% if request.user not in object.students.all %}
         <form action="{% url 'student_enroll_course' %}" method="post">
             {{enroll_form}}
             {% csrf_token %}
             <input type="submit" value="Enroll now">
         </form>
+        {% endif %}
     {% else %}
         <a href="{% url 'student_registration' %}" class="button">
             Register to enroll

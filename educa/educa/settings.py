@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'chat',
+    'daphne',
+    'channels',
     'students',
     'courses',
     'django.contrib.admin',
@@ -137,7 +140,7 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 from django.urls import reverse_lazy
-LOGIN_REDIRECT_URL = reverse_lazy('student_course_list')
+LOGIN_REDIRECT_URL = reverse_lazy('course_list')
 
 # CACHES = {
 #     'default': {
@@ -179,3 +182,5 @@ REST_FRAMEWORK = {
     ]
 }
 
+# ASGI_APPLICATION = 'educa.routing.application'
+ASGI_APPLICATION = 'educa.asgi.application'
